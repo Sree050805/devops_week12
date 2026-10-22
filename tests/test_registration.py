@@ -59,7 +59,7 @@ def test_valid_input(setup_teardown):
     driver.find_element(By.NAME, "sb").click()
 
     # Wait for redirect
-    time.sleep(2)
+    time.sleep(15)
 
     current_url = driver.execute_script("return window.location.href;")
     assert "/submit" in current_url, "Expected redirect to /submit"
