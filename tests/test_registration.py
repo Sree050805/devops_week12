@@ -32,7 +32,7 @@ def test_empty_username(setup_teardown):
 
 def test_empty_password(setup_teardown):
     driver = setup_teardown
-    driver.get("http://127.0.0.1:5000/")
+    driver.get("http://127.0.0.1:30080/")
     driver.find_element(By.NAME, "username").send_keys("John Doe")
     driver.find_element(By.NAME, "pwd").clear()
     driver.find_element(By.NAME, "sb").click()
@@ -42,7 +42,7 @@ def test_empty_password(setup_teardown):
 
 def test_short_password(setup_teardown):
     driver = setup_teardown
-    driver.get("http://127.0.0.1:5000/")
+    driver.get("http://127.0.0.1:30080/")
     driver.find_element(By.NAME, "username").send_keys("Jane")
     driver.find_element(By.NAME, "pwd").send_keys("abc1")
     driver.find_element(By.NAME, "sb").click()
@@ -53,13 +53,13 @@ def test_short_password(setup_teardown):
 # Test 4: Valid input - should redirect to greeting.html
 def test_valid_input(setup_teardown):
     driver = setup_teardown
-    driver.get("http://127.0.0.1:5000/")
+    driver.get("http://127.0.0.1:30080/")
     driver.find_element(By.NAME, "username").send_keys("Alice")
     driver.find_element(By.NAME, "pwd").send_keys("abc123")
     driver.find_element(By.NAME, "sb").click()
 
     # Wait for redirect
-    time.sleep(2)
+    time.sleep(15)
 
     # Verify URL
     current_url = driver.current_url
