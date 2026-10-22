@@ -22,7 +22,7 @@ def get_alert_text(driver):
 
 def test_empty_username(setup_teardown):
     driver = setup_teardown
-    driver.get("http://127.0.0.1:5000/")
+    driver.get("http://127.0.0.1:30080/")
     driver.find_element(By.NAME, "username").clear()
     driver.find_element(By.NAME, "pwd").send_keys("Password123")
     driver.find_element(By.NAME, "sb").click()
