@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: week12-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: week12
+  template:
+    metadata:
+      labels:
+        app: week12
+    spec:
+      containers:
+        - name: week12
+          image: sreeja6/devops_week12:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000
