@@ -26,7 +26,7 @@ def test_empty_username(setup_teardown):
     driver.find_element(By.NAME, "username").clear()
     driver.find_element(By.NAME, "pwd").send_keys("Password123")
     driver.find_element(By.NAME, "sb").click()
-    time.sleep(15)
+    time.sleep(1)
     alert_text = get_alert_text(driver)
     assert alert_text == "Username cannot be empty."
 
@@ -36,7 +36,7 @@ def test_empty_password(setup_teardown):
     driver.find_element(By.NAME, "username").send_keys("John Doe")
     driver.find_element(By.NAME, "pwd").clear()
     driver.find_element(By.NAME, "sb").click()
-    time.sleep(15)
+    time.sleep(1)
     alert_text = get_alert_text(driver)
     assert alert_text == "Password cannot be empty."
 
@@ -46,7 +46,7 @@ def test_short_password(setup_teardown):
     driver.find_element(By.NAME, "username").send_keys("Jane")
     driver.find_element(By.NAME, "pwd").send_keys("abc1")
     driver.find_element(By.NAME, "sb").click()
-    time.sleep(15)
+    time.sleep(1)
     alert_text = get_alert_text(driver)
     assert alert_text == "Password must be at least 6 characters long."
 
@@ -59,7 +59,7 @@ def test_valid_input(setup_teardown):
     driver.find_element(By.NAME, "sb").click()
 
     # Wait for redirect
-    time.sleep(15)
+    time.sleep(1)
 
     current_url = driver.execute_script("return window.location.href;")
     assert "/submit" in current_url, "Expected redirect to /submit"
