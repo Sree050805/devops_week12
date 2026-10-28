@@ -1,10 +1,12 @@
-
 pipeline {
     agent any
-environment {
-    PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
-}
+
+    environment {
+        PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
+    }
+
     stages {
+
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t sreeja6/devops_week12:latest .'
@@ -28,16 +30,30 @@ environment {
             steps {
                 sh 'kubectl apply -f deployment.yaml'
                 sh 'kubectl apply -f service.yaml'
+
                 sh 'kubectl rollout restart deployment/week12-deployment'
-                sh 'kubectl rollout status deployment/week12-deployment --timeout=120s'
+
+                sh '''
+                    kubectl rollout status deployment/week12-deployment \
+                    --timeout=120s
+                '''
+            }
+        }
+
+        stage('Run Selenium Tests') {
+            steps {
+                sh '''
+                    pytest tests/test_registration.py -v -s
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'Week 12 deployment completed successfully!'
+            echo 'Week 12 deployment and Selenium testing completed successfully!'
         }
+
         failure {
             echo 'Pipeline failed. Check the logs.'
         }
