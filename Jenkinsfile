@@ -43,7 +43,10 @@ pipeline {
         stage('Run Selenium Tests') {
             steps {
                 sh '''
-                    pytest tests/test_registration.py -v -s
+                   python3 -m venv .venv
+            .venv/bin/python -m pip install --upgrade pip
+            .venv/bin/python -m pip install pytest selenium webdriver-manager
+            .venv/bin/python -m pytest tests/test_registration.py -v -s
                 '''
             }
         }
