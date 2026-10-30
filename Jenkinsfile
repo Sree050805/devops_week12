@@ -4,6 +4,16 @@ pipeline {
     environment {
         PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
     }
+    stage('Run Selenium Tests') {
+            steps {
+                sh '''
+                   python3 -m venv .venv
+            .venv/bin/python -m pip install --upgrade pip
+            .venv/bin/python -m pip install pytest selenium webdriver-manager
+            .venv/bin/python -m pytest tests/test_registration.py -v -s
+                '''
+            }
+        }
 
     stages {
 
@@ -36,17 +46,6 @@ pipeline {
                 sh '''
                     kubectl rollout status deployment/week12-deployment \
                     --timeout=120s
-                '''
-            }
-        }
-
-        stage('Run Selenium Tests') {
-            steps {
-                sh '''
-                   python3 -m venv .venv
-            .venv/bin/python -m pip install --upgrade pip
-            .venv/bin/python -m pip install pytest selenium webdriver-manager
-            .venv/bin/python -m pytest tests/test_registration.py -v -s
                 '''
             }
         }
