@@ -4,18 +4,19 @@ pipeline {
     environment {
         PATH = "/usr/local/bin:/opt/homebrew/bin:${env.PATH}"
     }
-    stage('Run Selenium Tests') {
+
+    stages {
+
+        stage('Run Selenium Tests') {
             steps {
                 sh '''
-                   python3 -m venv .venv
-            .venv/bin/python -m pip install --upgrade pip
-            .venv/bin/python -m pip install pytest selenium webdriver-manager
-            .venv/bin/python -m pytest tests/test_registration.py -v -s
+                    python3 -m venv .venv
+                    .venv/bin/python -m pip install --upgrade pip
+                    .venv/bin/python -m pip install pytest selenium webdriver-manager
+                    .venv/bin/python -m pytest tests/test_registration.py -v -s
                 '''
             }
         }
-
-    stages {
 
         stage('Build Docker Image') {
             steps {
@@ -40,13 +41,8 @@ pipeline {
             steps {
                 sh 'kubectl apply -f deployment.yaml'
                 sh 'kubectl apply -f service.yaml'
-
                 sh 'kubectl rollout restart deployment/week12-deployment'
-
-                sh '''
-                    kubectl rollout status deployment/week12-deployment \
-                    --timeout=120s
-                '''
+                sh 'kubectl rollout status deployment/week12-deployment --timeout=120s'
             }
         }
     }
